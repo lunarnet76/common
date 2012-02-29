@@ -1,0 +1,59 @@
+div.code{
+    padding-left:26px;
+    border: 1px solid black;
+} 
+
+code .numbers{
+    background:#ECECEC; 
+    width:25px; 
+    color:black !important;
+    text-align: center;
+    float:left;
+    margin-left:-26px;
+} 
+
+
+code .php-keyword{
+    color:blue;
+}
+
+code .php-text{
+    color:#CC0000;
+}
+
+code .php-comment{
+    color:#FF9900
+}
+
+code .php-var{
+    color:black;
+    font-weight: bold;
+}
+code .php-class{
+    color:#006600;
+}
+code span.php-tag{
+    color:red !important;
+    font-weight: bold;
+}
+
+code .css-identifier{
+
+    font-weight:bold;
+    color:black;
+}
+code .css-key{
+    margin-left:20px;
+    font-weight:bold;
+    color:#006600;
+}
+code .css-value{
+    color:#ae1414
+}
+code .css-bracket{
+    font-weight:bold;
+    color:black;
+}
+code .css-colon,.css-semicolon{
+
+}
