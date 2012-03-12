@@ -1,22 +1,23 @@
 <?php
 namespace Common {
     class Upload {
-        public static function error($errorcode,$emptyiserror=false){
-            switch($errorcode){
+
+        public static function error($errorcode, $emptyiserror = false) {
+            switch ($errorcode) {
                 case UPLOAD_ERR_OK:
-                    $error=false;
+                    $error = false;
                     break;
                 case 1 :
                     $error = 'upload_too_large';
                 case 2 :
                     $error = 'upload_too_large';
                 case 3 :
-                    $error= 'upload_partial';
+                    $error = 'upload_partial';
                 case 4:
-                     if($emptyiserror)
-                         $error='upload_none';
-                     else
-                         $error=false;
+                    if ($emptyiserror)
+                        $error = 'upload_none';
+                    else
+                        $error = false;
                     break;
                 case 6 :
                     $error = 'upload_notmpdir';
@@ -49,19 +50,30 @@ namespace Common {
         }
 
         protected static function _normaliseRecursive(&$array, $part, &$arrayType, &$arrayTmpName, &$arrayError, &$arraySize, &$request) {
-            foreach ($array as $k => $v) {
-                if (is_array($v))
-                    self::_normaliseRecursive($array[$k], $part, $arrayType[$k], $arrayTmpName[$k], $arrayError[$k], $arraySize[$k], $request[$k]);
-                else {
-                    $array[$k] = array(
-                        'name' => $v,
-                        'type' => $arrayType[$k],
-                        'tmp_name' => $arrayTmpName[$k],
-                        'error' => $arrayError[$k],
-                        'size' => $arraySize[$k],
-                    );
-                    $request[$k] = $array[$k];
+            if (is_array($array)) {
+                foreach ($array as $k => $v) {
+                    if (is_array($v))
+                        self::_normaliseRecursive($array[$k], $part, $arrayType[$k], $arrayTmpName[$k], $arrayError[$k], $arraySize[$k], $request[$k]);
+                    else {
+                        $array[$k] = array(
+                            'name' => $v,
+                            'type' => $arrayType[$k],
+                            'tmp_name' => $arrayTmpName[$k],
+                            'error' => $arrayError[$k],
+                            'size' => $arraySize[$k],
+                        );
+                        $request[$k] = $array[$k];
+                    }
                 }
+            }else{
+                /*pre($array);
+                $array[$k] = array(
+                            'name' => $v,
+                            'type' => $arrayType[$k],
+                            'tmp_name' => $arrayTmpName[$k],
+                            'error' => $arrayError[$k],
+                            'size' => $arraySize[$k],
+                        );*/
             }
         }
     }
