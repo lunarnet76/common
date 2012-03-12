@@ -1,5 +1,5 @@
 <?php
-namespace CRUDsader\MVC {
+namespace Common {
     class Image {
         /**
          * 	@access	protected
@@ -260,7 +260,7 @@ namespace CRUDsader\MVC {
          * 	@param string|bool $newName the name of the final image
          * 	@return array|string wether an array with the filename and the folder or an error message
          */
-        public static function resizeFile($file, $maxWidth=false, $maxHeight=false, $deleteOriginal=false, $folder=false, $destinationFolder=false, $newName=false) {
+        public static function resizeFile($file, $maxWidth=false, $maxHeight=false, $deleteOriginal=false, $folder=false, $destinationFolder=false, $newName=false,$extensionReturned = false) {
 
             if (file_exists($folder . $file)) {
                 if (!$destinationFolder)
@@ -315,7 +315,7 @@ namespace CRUDsader\MVC {
                         return ($destinationFolder . ' is not writable');
 
                     // save the resized image in the folder $destination
-                    switch ($extension) {
+                    switch ($extensionReturned?$extensionReturned:$extension) {
                         case 'png':
                             imagepng($imageGDDestination, $destinationFolder . $imageNewName);
                             break;
