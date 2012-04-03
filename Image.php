@@ -267,12 +267,15 @@ namespace Common {
                     $destinationFolder = $folder;
                 // get the information about the file (size, format...)
                 $infofile = pathinfo($folder . $file);
-
-                //  get the image extension (jpg, png, ...)
-                $extension = strtolower($infofile['extension']);
+		
+		$fi = finfo_open(FILEINFO_MIME_TYPE);
+		$mime = (finfo_file($fi,$folder . $file));
+		finfo_close($fi);
+		$extension = str_replace('image/','',$mime);
 
                 // check whether it is an image format:
-                if ($extension == "jpg" || $extension == "png" || $extension == "jpeg" || $extension == "gif") {
+                if ($mime == "image/jpg" || $mime == "image/png" || $mime == "image/jpeg" || $mime == "image/gif") {
+			
                     // create a GD Image from the source image according to the MIME type
                     switch ($extension) {
                         case 'png':
