@@ -9,9 +9,9 @@ namespace Common {
 
 		public static function getMimeType($path)
 		{
-			$finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-			$mime = finfo_file($finfo, $path);
-			finfo_close($finfo);
+			$finfo = \finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+			$mime = \finfo_file($finfo, $path);
+			\finfo_close($finfo);
 			return $mime;
 		}
 	}
