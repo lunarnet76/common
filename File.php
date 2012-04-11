@@ -9,9 +9,14 @@ namespace Common {
 
 		public static function getMimeType($path)
 		{
-			$finfo = \finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-			$mime = \finfo_file($finfo, $path);
-			\finfo_close($finfo);
+			if(function_exists('finfo_open')){
+			$finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+			$mime = finfo_file($finfo, $path);
+			finfo_close($finfo);
+			}else if(function_exists('mime_content_type')){
+				return mime_content_type($path);
+			}else
+				throw new \Exception('your system does not support finfo nor mime_content_type');
 			return $mime;
 		}
 	}
