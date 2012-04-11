@@ -15,6 +15,8 @@ namespace Common {
 			finfo_close($finfo);
 			}else if(function_exists('mime_content_type')){
 				return mime_content_type($path);
+			}else if($info = getimagesize($path)){
+				return $info['mime'];
 			}else
 				throw new \Exception('your system does not support finfo nor mime_content_type');
 			return $mime;
