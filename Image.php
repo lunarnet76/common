@@ -265,13 +265,8 @@ namespace Common {
             if (file_exists($folder . $file)) {
                 if (!$destinationFolder)
                     $destinationFolder = $folder;
-                // get the information about the file (size, format...)
-                $infofile = pathinfo($folder . $file);
 		
-		$fi = finfo_open(FILEINFO_MIME_TYPE);
-		$mime = (finfo_file($fi,$folder . $file));
-		finfo_close($fi);
-		$extension = str_replace('image/','',$mime);
+		$extension = str_replace('image/','',\Common\File::getMimeType($folder . $file));
 
                 // check whether it is an image format:
                 if ($mime == "image/jpg" || $mime == "image/png" || $mime == "image/jpeg" || $mime == "image/gif") {
