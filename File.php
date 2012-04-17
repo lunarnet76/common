@@ -4,7 +4,7 @@ namespace Common {
 
 		public static function getExtension($file)
 		{
-			return substr($file, strrpos($file, '.') + 1);
+			return strtolower(substr($file, strrpos($file, '.') + 1));
 		}
 
 		public static function getMimeType($path)
