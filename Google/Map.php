@@ -10,13 +10,12 @@ namespace Common\Google {
 			$this->_apiKey = $apiKey;
 		}
 
-		public function fromAddress($address)
-		{
-			$xml = $this->_urlToHtml( self::URL . 'geo?output=xml&key=' . $this->_apiKey . '&q=' . urlencode($address));
-
-			$o = new SimpleXMLElement($xml);
-
-			return $o->Response;
+		public function fromAddress($address,$uk=true)
+		{	
+			$url =self::GEOCODE_URL . 'json?address=' . urlencode($address).'&sensor=false'.($uk?'&region=gb&language=en-GB':'');
+			
+			$json = $this->_urlToHtml($url);
+			return $json;
 		}
 
 		public function getLatLng($address)
@@ -31,7 +30,6 @@ namespace Common\Google {
 
 		protected function _urlToHtml($url)
 		{
-			echo $url;
 			$c = curl_init();
 
 			curl_setopt($c, CURLOPT_URL,$url);
