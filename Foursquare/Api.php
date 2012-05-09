@@ -13,14 +13,15 @@ namespace Common\Foursquare {
 		{
 			$ch = curl_init();
 			
-			$url = 'https://api.foursquare.com/v2/'.$query.'&client_id='.$this->_id.'&client_secret='.$this->_secret.'&v='.date('Ymd');
+			$separator = strpos($query,'?')!==false?'&':'?';
+			$url = 'https://api.foursquare.com/v2/'.$query.$separator.'client_id='.$this->_id.'&client_secret='.$this->_secret.'&v='.date('Ymd');
+			
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 			$body = curl_exec($ch);
 			
 			curl_close($ch);
-			
 			$json = json_decode($body,true);
 			
 			if(isset($json['meta']['code']) && $json['meta']['code']!=200)
