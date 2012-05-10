@@ -2,13 +2,13 @@
 namespace Common\Json {
 	class Validation {
 
-		public static function againstSchema($json, array $schema, $folder = false)
+		public static function againstSchema($json, array $schema, $folder = false,$name = 'root')
 		{
 			$json = @json_decode($json, true);
 			if (json_last_error())
 				throw new \Exception('parse_error:' . json_last_error());
 
-			self::againstSchemaRecursive($json, $schema, 'root', $folder);
+			self::againstSchemaRecursive($json, $schema, $name, $folder);
 		}
 
 		private static function againstSchemaRecursive($value, array $props, $name = 'root', $folder = false)
