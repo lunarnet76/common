@@ -4,10 +4,13 @@ namespace Common\Json {
 
 		public static function againstSchema($json, array $schema, $folder = false,$name = 'root')
 		{
-			$json = @json_decode($json, true);
+			if(!is_string($json))
+				throw new \Exception('json must be a string');
+			
+			$json = json_decode($json, true);
 			if (json_last_error())
 				throw new \Exception('parse_error:' . json_last_error());
-
+			
 			self::againstSchemaRecursive($json, $schema, $name, $folder);
 		}
 
@@ -45,8 +48,9 @@ namespace Common\Json {
 						}
 						foreach ($properties as $propertyName => $propertyInfo) {
 							if (!isset($value[$propertyName])) {
-								if (isset($propertyInfo['required']) && $propertyInfo['required'])
-									throw new \Exception('missing element ' . $name . '.' . $propertyName);
+								if (isset($propertyInfo['required']) && $propertyInfo['required']){
+									throw new \Exception('missing element ' . $name . '.' . $propertyName.' :'.implode(',',$propertyInfo));
+								}
 								continue;
 							}
 							switch ($propertyInfo['type']) {
