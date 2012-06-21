@@ -20,12 +20,11 @@ namespace Common\Google {
 
 		public function getLatLng($address)
 		{
-			$info = $this->fromAddress($address);
-
-			$o = $this->fromAddress('lothian road Edinburgh');
-			$latLng = explode(',', $o->Placemark[0]->Point->coordinates);
-
-			return array('lng' => deg2rad($latLng[0]), 'lat' => deg2rad($latLng[1]));
+			$info = json_decode($this->fromAddress($address),true);
+			if(empty($info['results'][0]['geometry']['location']))
+				return false;
+			$info = $info['results'][0]['geometry']['location'];
+			return array('lng' => ($info['lng']), 'lat' => ($info['lat']));
 		}
 
 		protected function _urlToHtml($url)
