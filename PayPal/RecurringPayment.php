@@ -1,14 +1,6 @@
 <?php
-namespace Common\Paypal\RecurringPayment {
+namespace Common\Paypal {
 
-	function pre($v, $title = false)
-	{
-		if ($title)
-			echo '<h3>' . $title . '</h3>';
-		echo '<pre>';
-		print_r($v);
-		echo '</pre>';
-	}
 	class RecurringPayment {
 		protected $_key;
 		protected $_password;
@@ -86,8 +78,9 @@ namespace Common\Paypal\RecurringPayment {
 		 * @throws Exception when server cannot be contacted
 		 * @return boolean succeeded or not
 		 */
-		public function createSubscription($startDate, $billingPeriod, $billingFreq)
+		public function createSubscription($startDate, $billingPeriod, $billingFreq,$extraArgs = null)
 		{
+			
 			// api call
 			$args = (array(
 			    'TOKEN' => ($this->_session['token']),
@@ -99,6 +92,10 @@ namespace Common\Paypal\RecurringPayment {
 			    'DESC' => $this->_session['description']
 				));
 
+			if (!empty($extraArgs))
+				$args = $args + $extraArgs;
+			
+			
 			$httpParsedResponseArray = $this->CreateRecurringPaymentsProfile($args);
 
 			if ("SUCCESS" == strtoupper($httpParsedResponseArray["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseArray["ACK"])) {
@@ -108,16 +105,19 @@ namespace Common\Paypal\RecurringPayment {
 			}
 		}
 
-		public function doExpressCheckoutPayment($payerId)
+		public function doExpressCheckoutPayment($payerId,$extraArgs = null)
 		{
-			pre($this->_session);
-			return $this->curl('DoExpressCheckoutPayment', array(
+			$args = array(
 				    'TOKEN' => ($this->_session['token']),
 				    'PAYERID' => $payerId,
 				    'PAYMENTACTION' => 'Authorization',
 				    'AMT' => $this->_session['AMT'],
 				    'CURRENCYCODE' => $this->_session['CURRENCYCODE']
-				));
+				);
+			if (!empty($extraArgs))
+				$args = $args + $extraArgs;
+			
+			return $this->curl('DoExpressCheckoutPayment', $args);
 		}
 
 		public function getLastCall()
@@ -205,4 +205,3 @@ namespace Common\Paypal\RecurringPayment {
 		
 	}
 }
-RecurringPayment::test();
