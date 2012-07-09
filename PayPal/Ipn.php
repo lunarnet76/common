@@ -14,7 +14,7 @@ namespace Common\Paypal {
 			return $this->_data;
 		}
 
-		public function check()
+		public function check($live = false)
 		{
 			if ($this->_mock)
 				return true;
@@ -31,7 +31,7 @@ namespace Common\Paypal {
 			$header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
 			$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 			$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-			$fp = fsockopen('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+			$fp = fsockopen('ssl://www.'.($live?'':'sandbox.').'paypal.com', 443, $errno, $errstr, 30);
 
 			if (!$fp) {
 				return false;
