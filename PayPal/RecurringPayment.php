@@ -59,7 +59,7 @@ namespace Common\Paypal {
 				$args = $args + $extraArgs;
 			$response = $this->SetExpressCheckout($args);
 			if (empty($response['TOKEN']))
-				throw new FatalException('could not get token');
+				throw new FatalException('could not get token from response : '.$response);
 			$url = 'https://www.' . ($this->_environment == 'sandbox' ? 'sandbox.' : '') . 'paypal.com/webscr&cmd=_express-checkout&token=' . ($response['TOKEN']);
 			header('Location: ' . $url);
 			$this->_session['token'] = $response['TOKEN'];
