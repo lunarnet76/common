@@ -52,7 +52,7 @@ namespace Common\Paypal {
 			    'CURRENCYCODE' => $currencyID,
 			    'L_BILLINGTYPE0' => 'RecurringPayments',
 			    'L_BILLINGAGREEMENTDESCRIPTION0' => $desc,
-			    'L_PAYMENTTYPE0' => 'Any',
+			    'L_PAYMENTTYPE0' => 'InstantOnly',
 			    'L_CUSTOM0' => ''
 			);
 			if (!empty($extraArgs))
@@ -180,7 +180,7 @@ namespace Common\Paypal {
 			try {
 				if (!isset($_SESSION))
 					session_start();
-				$rp = new RecurringPayment('buyer_1325602144_biz_api1.msn.com', '1325602169', 'Awfo7lgWXyizmP8cuorghcywo7RfAGIt.C5kSn3igUlJz5630rUcKLey', 'http://dev/test/paypal.php?action=return', 'http://dev/test/paypal.php?action=cancel');
+				$rp = new RecurringPayment('buyer_1325602144_biz_api1.msn.com', '1325602169', 'Awfo7lgWXyizmP8cuorghcywo7RfAGIt.C5kSn3igUlJz5630rUcKLey', 'http://venues.swarmly.dev/subscription/pay?action=return', 'http://venues.swarmly.dev/subscription/pay?action=cancel');
 
 				$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : 'set_express_checkout';
 				switch ($action) {
