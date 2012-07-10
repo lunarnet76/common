@@ -78,7 +78,7 @@ namespace Common\Paypal {
 		 * @throws Exception when server cannot be contacted
 		 * @return boolean succeeded or not
 		 */
-		public function createSubscription($startDate, $billingPeriod, $billingFreq,$extraArgs = null)
+		public function createSubscription($startDate = '2012-12-31T0:0:0', $billingPeriod, $billingFreq,$extraArgs = null)
 		{
 			
 			// api call
@@ -86,11 +86,11 @@ namespace Common\Paypal {
 			    'TOKEN' => ($this->_session['token']),
 			    'AMT' => urlencode($this->_session['AMT']),
 			    'CURRENCYCODE' => urlencode($this->_session['CURRENCYCODE']),
-			    'PROFILESTARTDATE' => $startDate . 'T0:0:0',
+			    'PROFILESTARTDATE' => $startDate ,
 			    'BILLINGPERIOD' => urlencode($billingPeriod),
 			    'BILLINGFREQUENCY' => urlencode($billingFreq),
 			    'DESC' => $this->_session['description']
-				));
+			));
 
 			if (!empty($extraArgs))
 				$args = $args + $extraArgs;
