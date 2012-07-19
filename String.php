@@ -39,12 +39,15 @@ namespace Common {
 	public static function shorten($text,$size=32){
 		
 		$sl = strlen($text);
+               
 		if($sl<$size)
 			return $text;
 		$text = substr($text,0,$size);
 		$pos = strrpos($text,' ');
 		if($pos!== false)
 			return substr($text,0,$pos).'...';
+                else
+                        return $text.'...';
 		return $text;
 	}
     }
