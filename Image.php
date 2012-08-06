@@ -301,7 +301,7 @@ namespace Common {
                     imagecopyresampled($imageGDDestination, $imageGDSource, 0, 0, 0, 0, $resize[2], $resize[3], $resize[0], $resize[1]);
 
                     // if not specified,create a new name for the image with the new file extension
-                    $imageNewName = $newName ? $newName : time() . microtime() . '.' . $extension;
+                     $imageNewName = $newName ? $newName : str_replace(' ','.',time() . microtime()) . '.' . $extension;
 
                     //if we decided to delete the file, we do it
                     if ($deleteOriginal) {

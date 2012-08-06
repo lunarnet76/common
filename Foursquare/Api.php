@@ -22,6 +22,7 @@ namespace Common\Foursquare {
 			$body = curl_exec($ch);
 			
 			curl_close($ch);
+                        
 			$json = json_decode($body,true);
 			
 			if(isset($json['meta']['code']) && $json['meta']['code']!=200)

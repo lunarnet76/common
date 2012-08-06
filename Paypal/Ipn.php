@@ -34,7 +34,7 @@ namespace Common\Paypal {
 			$fp = fsockopen('ssl://www.'.($live?'':'sandbox.').'paypal.com', 443, $errno, $errstr, 30);
 
 			if (!$fp) {
-				return false;
+				throw new \Exception('cannot connect to '.'ssl://www.'.($live?'':'sandbox.').'paypal.com');
 			} else {
 
 				fputs($fp, $header . $req);
