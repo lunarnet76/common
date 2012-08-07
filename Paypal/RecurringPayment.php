@@ -32,6 +32,22 @@ namespace Common\Paypal {
 		{
 			return $this->curl($method, $args[0]);
 		}
+                
+                public function cancel($recurringProfileId,$reason = ''){
+                        // 
+                        $args = array(
+			    'Action' => 'Cancel',// Susepnd, Reactivate
+			    'PROFILEID' => $recurringProfileId,
+			    'NOTE' => $reason
+			);
+                        
+                        $ret = $this->curl('ManageRecurringPaymentsProfileStatus', $args);
+                        if ("SUCCESS" == strtoupper($ret["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($ret["ACK"])) {
+				return true;
+			} else {
+				return false;
+			}
+                }
 
 		/**
 		 * redirect to paypal
