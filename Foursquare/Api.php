@@ -11,8 +11,6 @@ namespace Common\Foursquare {
 
 		public function query($query)
 		{
-                        if(isset($_REQUEST['die']))
-                        die('foursquare');
                         $start = microtime(true);
 			$ch = curl_init();
 			
@@ -36,7 +34,8 @@ namespace Common\Foursquare {
 				return false;
 			$end = round(microtime(true) - $start, 4);
                         if(function_exists('lg'))
-                            lg($end,'logs/foursquare_api');
+                            lg($end,'foursquare_api');
+                      
 			return $json['response'];
 		}
 	}
