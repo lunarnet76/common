@@ -11,6 +11,8 @@ namespace Common\Foursquare {
 
 		public function query($query)
 		{
+                        if(isset($_REQUEST['die']))
+                        die('foursquare');
                         $start = microtime(true);
 			$ch = curl_init();
 			
