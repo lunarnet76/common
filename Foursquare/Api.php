@@ -11,6 +11,7 @@ namespace Common\Foursquare {
 
 		public function query($query)
 		{
+                        $start = microtime(true);
 			$ch = curl_init();
 			
 			$separator = strpos($query,'?')!==false?'&':'?';
@@ -18,15 +19,23 @@ namespace Common\Foursquare {
 			
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			/*curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 1000);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1000);*/
 
 			$body = curl_exec($ch);
 			
 			curl_close($ch);
+                        
 			$json = json_decode($body,true);
 			
 			if(isset($json['meta']['code']) && $json['meta']['code']!=200)
 				return false;
-			
+			$end = round(microtime(true) - $start, 4);
+                        if(function_exists('lg'))
+                            lg($end,'foursquare_api');
+                      
 			return $json['response'];
 		}
 	}
